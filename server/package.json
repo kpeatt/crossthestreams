@@ -1,0 +1,19 @@
+{
+  "author": "Tim Kim <timkim85@gmail.com>",
+  "name": "CrossTheStreams",
+  "description": "Crossword hashtags",
+  "version": "0.0.1",
+  "homepage": "https://github.com/kpeatt/crossthestreams",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kpeatt/crossthestreams.git"
+  },
+  "main": "index.js",
+  "directories" : {
+
+  },
+  "dependencies" : {
+    "twitter" :"0.2.5"
+  }
+
+}
