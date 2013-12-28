@@ -9,6 +9,21 @@ var twit = new twitter({
     access_token_secret: secret.access_token_secret
 });
 
-twit.get('/statuses/show/27593302936.json', {include_entities:true}, function(data) {
-    console.log(util.inspect(data));
+function filter(arr, criteria) {
+  return arr.filter(function(obj) {
+    return Object.keys(criteria).every(function(c) {
+      return obj[c] == criteria[c];
+    });
+  });
+}
+
+twit.get('/statuses/user_timeline.json', {count: 100, user_id:"timkim", screen_name:"timkim"}, function(data) {
+    //console.log(util.inspect(data));
+    console.log(filter(data,{'favorited': true}));
 });
+
+/*
+twit.verifyCredentials(function(data) {
+        console.log(util.inspect(data));
+    })
+*/
