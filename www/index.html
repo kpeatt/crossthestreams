@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+    <meta charset="utf-8">
+    <title>Your Page Title Here :)</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+        #crossword {
+            text-align:center;
+        }
+
+        .crossword {
+            border-collapse:collapse;
+            font-family:"Courier New", Courier, monospace;
+            margin-left:auto;
+            margin-right:auto;
+            clear:both;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+
+        .crossword td {
+            border:1px solid black;
+            padding:0;
+            margin:0;
+            vertical-align:middle;
+            padding:0;
+            text-align:center;
+            width:30px;
+            height:30px;
+        }
+
+        .crossword .no-border {
+            border:none;
+        }
+
+        #clues {
+            margin:auto;
+        }
+
+        #clues td {
+            vertical-align:top;
+        }
+    </style>
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body>
+
+    <pre id="array"></pre>
+
+    <div id="crossword"></div>
+    <table id="clues">
+        <thead>
+            <tr>
+                <th>Across</th>
+                <th>Down</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><ul id="across"></ul></td>
+                <td><ul id="down"></ul></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <script type="text/javascript" src="js/crossword.js"></script>
+
+    <script type="text/javascript">
+    window.onload = function(){
+        // words[i] correlates to clues[i]
+        var words = ["dog", "cat", "bat", "elephant", "kangaroo"];
+        var clues = ["Man's best friend", "Likes to chase mice", "Flying mammal", "Has a trunk", "Large marsupial"];
+
+        // Create crossword object with the words and clues
+        var cw = new Crossword(words, clues);
+
+        // create the crossword grid (try to make it have a 1:1 width to height ratio in 10 tries)
+        var tries = 10; 
+        var grid = cw.getSquareGrid(tries);
+
+        document.getElementById("array").innerHTML = JSON.stringify(grid, null, 4);;
+
+        // report a problem with the words in the crossword
+        if(grid == null){
+            var bad_words = cw.getBadWords();
+            var str = [];
+            for(var i = 0; i < bad_words.length; i++){
+                str.push(bad_words[i].word);
+            }
+            alert("Shoot! A grid could not be created with these words:\n" + str.join("\n"));
+            return;
+        }
+
+        // turn the crossword grid into HTML
+        var show_answers = true;
+        document.getElementById("crossword").innerHTML = CrosswordUtils.toHtml(grid, show_answers);
+
+        // make a nice legend for the clues
+        var legend = cw.getLegend(grid);
+        addLegendToPage(legend);
+    };
+
+    function addLegendToPage(groups){
+        for(var k in groups){
+            var html = [];
+            for(var i = 0; i < groups[k].length; i++){
+                html.push("<li><strong>" + groups[k][i]['position'] + ".</strong> " + groups[k][i]['clue'] + "</li>");
+            }
+            document.getElementById(k).innerHTML = html.join("\n");
+        }
+    }
+    </script>
+</body>
+</html>
