@@ -71,17 +71,28 @@
 <body class="container">
 
     <h1>Cross The Streams</h1>
-    <p>A crossword game that users your Twitter stream as clues.</p>
+    <p>A crossword game that uses your Twitter stream as clues.</p>
 
     <div class="tweets" ng-controller="tweetsCtrl">
-    <p>{{ test }}</p>
 
-    <ul>
-        <li ng-repeat="tweet in tweets">
-            Tweet: {{ tweet.text }}<br>
-            Answer: {{ tweet.answer }}
-        </li>
-    </ul>
+        <div class="answer" id="answer{{$index}}" ng-repeat="answer in answers track by $index">
+            {{ $index+1 }}
+            <div class="answer__char-field" >
+                <input type="text" class="answer__char" name="char{{$index}}" maxlength="1" ng-repeat="i in tweets[$index].splitAnswer track by $index" ng-model="answer.user[$index]" required>
+            </div>
+        </div>
+
+        <ul>
+            <li ng-repeat="tweet in tweets">
+                <span class="tweet__text" ng-repeat="text in tweet.text">
+                    {{ text }}
+                    <span class="tweet__answer" ng-show="!$last">
+                        <span class="tweet__answer-char" ng-repeat="char in tweet.splitAnswer track by $index"
+                        >{{ answers[$parent.$parent.$index].user[$index] }}</span>
+                    </span>
+                </span>
+            </li>
+        </ul>
 
     </div>
 
@@ -104,7 +115,6 @@
         </tbody>
     </table>
 
-    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="js/crossword.js"></script>
 
     <script type="text/javascript">
