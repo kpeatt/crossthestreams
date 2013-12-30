@@ -10,6 +10,8 @@ crossApp.controller(
 
             $http.get('../server/sample.json').success(function(data) {
                 $scope.tweets = data;
+                $scope.words = [];
+                $scope.clues = [];
 
                 for (var i in $scope.tweets) {
                     var tweet = $scope.tweets[i];
@@ -25,15 +27,17 @@ crossApp.controller(
                     tweet['splitAnswer'] = splitAnswer;
 
                     chars = splitAnswer.map(function() {
-                        return ''
+                        return '';
                     })
-
-                    console.log(chars);
 
                     $scope.answers[i] = {
                         'user': chars,
-                        'correct': chars
+                        'correct': splitAnswer
                     }
+
+                    $scope.words.push(answer);
+
+                    $scope.clues.push(tweet['text'].join('ANSWER'));
                 }
             });
         }
