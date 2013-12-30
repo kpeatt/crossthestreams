@@ -112,20 +112,6 @@
     <pre id="array"></pre>
 
     <div id="crossword"></div>
-    <table id="clues">
-        <thead>
-            <tr>
-                <th>Across</th>
-                <th>Down</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><ul id="across"></ul></td>
-                <td><ul id="down"></ul></td>
-            </tr>
-        </tbody>
-    </table>
 
     <script type="text/javascript">
     window.onload = function(){
@@ -154,23 +140,9 @@
         }
 
         // turn the crossword grid into HTML
-        var show_answers = true;
+        var show_answers = false;
         document.getElementById("crossword").innerHTML = CrosswordUtils.toHtml(grid, show_answers);
-
-        // make a nice legend for the clues
-        var legend = cw.getLegend(grid);
-        addLegendToPage(legend);
     };
-
-    function addLegendToPage(groups){
-        for(var k in groups){
-            var html = [];
-            for(var i = 0; i < groups[k].length; i++){
-                html.push("<li><strong>" + groups[k][i]['position'] + ".</strong> " + groups[k][i]['clue'] + "</li>");
-            }
-            document.getElementById(k).innerHTML = html.join("\n");
-        }
-    }
     </script>
 </body>
 </html>
