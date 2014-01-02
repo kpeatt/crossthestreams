@@ -1,0 +1,48 @@
+.puzzle {
+}
+
+.puzzle__grid {
+    background: #151515;
+    border: 2px solid #151515;
+}
+
+%puzzle__cell,
+.puzzle__cell {
+    position: relative;
+
+    width: 60px;
+    height: 60px;
+    padding: 0.1em;
+    
+    background: white;
+    border: 1px solid #151515;
+    
+    &::after {
+        content: attr(data-clue);
+        
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        font-size: 12px;
+        
+        pointer-events: none;
+    }
+}
+
+%puzzle__cell--empty {
+    @extend %puzzle__cell;
+    
+    background: none;
+}
+
+.puzzle__cell-input {
+    width: 100%;
+    height: 100%;
+    
+    border: none;
+    
+    font-size: 1.5em;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+}

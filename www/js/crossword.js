@@ -367,7 +367,7 @@ var CrosswordUtils = {
     toHtml : function(grid, show_answers){
         if(grid == null) return;
         var html = [];
-        html.push("<table class='crossword'>");
+        html.push("<table class='puzzle__grid'>");
         var label = 1;
         for(var r = 0; r < grid.length; r++){
             html.push("<tr>");
@@ -376,17 +376,18 @@ var CrosswordUtils = {
                 var is_start_of_word = false;
                 if(cell == null){
                     var char = "&nbsp;";
-                    var css_class = "no-border";
+                    var css_class = "puzzle__cell--empty";
                 } else {
                     var char = cell['char'];
-                    var css_class = "";
+                    var css_class = "puzzle__cell";
                     var is_start_of_word = (cell['across'] && cell['across']['is_start_of_word']) || (cell['down'] && cell['down']['is_start_of_word']);
                 }
 
                 if(is_start_of_word) {
-                    var img_url = CrosswordUtils.PATH_TO_PNGS_OF_NUMBERS + label + ".png";
-                    html.push("<td class='" + css_class + "' title='" + r + ", " + c + "' style=\"background-image:url('" + img_url + "')\">");
+                    html.push("<td class='" + css_class + "' title='" + r + ", " + c + "')\" data-clue='" + label + "'><input type='text' maxlength='1' class='puzzle__cell-input'>");
                     label++;            
+                } else if(cell != null) {
+                    html.push("<td class='" + css_class + "' title='" + r + ", " + c + "')\"><input type='text' maxlength='1' class='puzzle__cell-input'>");
                 } else {
                     html.push("<td class='" + css_class + "' title='" + r + ", " + c + "'>");                   
                 }
@@ -394,7 +395,7 @@ var CrosswordUtils = {
                 if(show_answers) {
                     html.push(char);
                 } else {
-                    html.push("&nbsp;");                                
+                    html.push('');                                
                 }
             }
             html.push("</tr>");

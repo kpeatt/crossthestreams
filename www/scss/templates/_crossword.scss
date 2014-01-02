@@ -1,0 +1,23 @@
+.t-crossword {
+    background: #353535;
+
+    .wrapper {
+        @include grid-row();
+        max-width: 100%;
+    }
+
+    .puzzle {
+        @include grid-column(
+            $columns: 8,
+            $collapse: true
+        );
+    }
+
+    .clues {
+        @include grid-column(
+            $columns: 4,
+            $last-column: true,
+            $collapse: true
+        );
+    }
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>Cross the Streams!</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="js/crossword.js"></script>
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body class="t-crossword">
+
+    <header>
+        <h1>Cross the Streams</h1>
+        <a class="button">Generate New Puzzle</a>
+    </header>
+
+    <div class="wrapper">
+
+        <section class="puzzle">
+            <div class="puzzle__container" id="crossword">
+            </div>
+        </section>
+
+        <section class="clues">
+            <div class="clues__category--across">
+            </div>
+            <div class="clues__category--down">
+            </div>
+        </section>
+
+    </div>
+
+    <script type="text/javascript">
+    window.onload = function(){
+        // words[i] correlates to clues[i]
+        var words = ['kyle', 'sheena', 'tim', 'erin', 'michael', 'martin'];
+        var clues = ['kyle', 'sheena', 'tim', 'erin', 'michael', 'martin'];
+
+        // Create crossword object with the words and clues
+        var cw = new Crossword(words, clues);
+
+        // create the crossword grid (try to make it have a 1:1 width to height ratio in 10 tries)
+        var tries = 10; 
+        var grid = cw.getSquareGrid(tries);
+
+        // report a problem with the words in the crossword
+        if(grid == null){
+            var bad_words = cw.getBadWords();
+            var str = [];
+            for(var i = 0; i < bad_words.length; i++){
+                str.push(bad_words[i].word);
+            }
+            alert("Shoot! A grid could not be created with these words:\n" + str.join("\n"));
+            return;
+        }
+
+        // turn the crossword grid into HTML
+        var show_answers = false;
+        document.getElementById("crossword").innerHTML = CrosswordUtils.toHtml(grid, show_answers);
+    };
+    </script>
+</body>
+</html>
