@@ -28,11 +28,11 @@ function buildScore(arr){
         }
         
         if(arr[i].favorite_count > 0){
-            arr[i].score++;
+            arr[i].score += arr[i].favorite_count;
         }
         
         if(arr[i].retweet_count > 0){
-            arr[i].score++;
+            arr[i].score += arr[i].retweet_count;
         }
     }
     return arr;
@@ -70,17 +70,7 @@ twit.get('/statuses/user_timeline.json', {count: 100, screen_name:"kpeatt"}, fun
             return 1;
         }
         return 0
-    });
+        
     console.log(generateClues(sorted));
-    //console.log(sorted);
 });
-
-/*
-twit.verifyCredentials(function(data) {
-        console.log(util.inspect(data));
-    })
-*/
-
-// build up a score for tweets based upon 
-// existing entities.hashtags.length, favorite_count, retweet_count
 
